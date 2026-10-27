@@ -6,6 +6,7 @@ import RecipeModal from './components/RecipeModal';
 import RecipeDetailModal from './components/RecipeDetailModal';
 import DeleteConfirmModal from './components/DeleteConfirmModal';
 import Toast from './components/Toast';
+import Floating3DElements from './components/Floating3DElements';
 import {
   fetchAllRecipes,
   createRecipe,
@@ -106,6 +107,9 @@ export function App() {
 
   return (
     <div className="app-container">
+      {/* 3D Floating Scene Layer */}
+      <Floating3DElements />
+
       {/* Toast Alert Feedback */}
       {toast && (
         <Toast

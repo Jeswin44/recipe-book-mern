@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 
 const categoryIcons = {
   Breakfast: '🥞',
@@ -17,17 +17,64 @@ const categoryColors = {
 };
 
 const RecipeCard = ({ recipe, onViewDetails, onEdit, onDelete }) => {
+  const cardRef = useRef(null);
+  const [transformStyle, setTransformStyle] = useState('');
+  const [glareStyle, setGlareStyle] = useState({ opacity: 0, x: 50, y: 50 });
+
   const badgeClass = categoryColors[recipe.category] || 'badge-default';
   const dishEmoji = categoryIcons[recipe.category] || '🍲';
 
+  // Interactive 3D Perspective Tilt Tracking Mouse Movement
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -12; // tilt max 12 deg
+    const rotateY = ((x - centerX) / centerX) * 12;
+
+    setTransformStyle(
+      `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.03, 1.03, 1.03)`
+    );
+
+    const glareX = (x / rect.width) * 100;
+    const glareY = (y / rect.height) * 100;
+    setGlareStyle({ opacity: 0.35, x: glareX, y: glareY });
+  };
+
+  const handleMouseLeave = () => {
+    setTransformStyle('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+    setGlareStyle({ opacity: 0, x: 50, y: 50 });
+  };
+
   return (
-    <article className="recipe-card" onClick={() => onViewDetails(recipe)}>
-      {/* Floating Circular Dish Presentation (from reference image) */}
-      <div className="card-dish-visual">
+    <article
+      ref={cardRef}
+      className="recipe-card card-3d"
+      style={{ transform: transformStyle }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={() => onViewDetails(recipe)}
+    >
+      {/* 3D Dynamic Specular Light Glare */}
+      <div
+        className="card-3d-glare"
+        style={{
+          opacity: glareStyle.opacity,
+          background: `radial-gradient(circle at ${glareStyle.x}% ${glareStyle.y}%, rgba(255,255,255,0.7) 0%, transparent 60%)`
+        }}
+      />
+
+      {/* Floating 3D Circular Dish Visual popping out along Z axis */}
+      <div className="card-dish-visual popout-dish-3d">
         <span>{dishEmoji}</span>
       </div>
 
-      <div className="card-top-bar">
+      <div className="card-top-bar elevated-element-3d">
         <span className={`category-tag ${badgeClass}`}>
           {recipe.category}
         </span>
@@ -37,16 +84,16 @@ const RecipeCard = ({ recipe, onViewDetails, onEdit, onDelete }) => {
         </div>
       </div>
 
-      <div className="card-main-content">
+      <div className="card-main-content elevated-element-3d">
         <h3 className="recipe-title">{recipe.title}</h3>
         <p className="recipe-summary-hint">
           {recipe.ingredients.length} {recipe.ingredients.length === 1 ? 'ingredient' : 'ingredients'} &bull; Click to see full recipe
         </p>
       </div>
 
-      <div className="card-footer-actions">
+      <div className="card-footer-actions elevated-element-3d">
         <button
-          className="card-action-btn btn-view"
+          className="card-action-btn btn-view btn-3d"
           onClick={(e) => {
             e.stopPropagation();
             onViewDetails(recipe);
@@ -62,7 +109,7 @@ const RecipeCard = ({ recipe, onViewDetails, onEdit, onDelete }) => {
 
         <div className="card-edit-delete-group">
           <button
-            className="card-action-btn btn-edit"
+            className="card-action-btn btn-edit btn-3d"
             onClick={(e) => {
               e.stopPropagation();
               onEdit(recipe);
@@ -77,7 +124,7 @@ const RecipeCard = ({ recipe, onViewDetails, onEdit, onDelete }) => {
           </button>
 
           <button
-            className="card-action-btn btn-delete"
+            className="card-action-btn btn-delete btn-3d"
             onClick={(e) => {
               e.stopPropagation();
               onDelete(recipe);

@@ -1785,3 +1785,155 @@ button {
     justify-content: space-between;
   }
 }
+
+
+/* =========================================================
+   IMMERSIVE 3D VISUALS & DYNAMIC PARALLAX ENGINE
+========================================================= */
+
+/* 1. Floating 3D Background Ingredients Scene */
+.floating-3d-scene {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  overflow: hidden;
+  perspective: 1200px;
+}
+
+.floating-3d-item {
+  position: absolute;
+  filter: drop-shadow(0 14px 20px rgba(120, 60, 20, 0.25));
+  will-change: transform;
+}
+
+.food-3d-emoji {
+  display: block;
+  font-size: 2.8rem;
+  transition: transform 0.4s ease;
+}
+
+.item-tomato-1 {
+  top: 14%;
+  left: 4%;
+  animation: float3D-1 9s ease-in-out infinite alternate;
+}
+
+.item-basil-1 {
+  top: 25%;
+  right: 5%;
+  animation: float3D-2 8s ease-in-out infinite alternate 1s;
+}
+
+.item-garlic-1 {
+  top: 55%;
+  left: 2%;
+  animation: float3D-3 10s ease-in-out infinite alternate 2s;
+}
+
+.item-chili-1 {
+  top: 68%;
+  right: 4%;
+  animation: float3D-1 11s ease-in-out infinite alternate 1.5s;
+}
+
+.item-cheese-1 {
+  top: 86%;
+  left: 8%;
+  animation: float3D-2 9.5s ease-in-out infinite alternate 0.5s;
+}
+
+.item-avocado-1 {
+  top: 88%;
+  right: 8%;
+  animation: float3D-3 8.5s ease-in-out infinite alternate 2.5s;
+}
+
+@keyframes float3D-1 {
+  0% { transform: translateY(0px) rotate(0deg) scale(1); }
+  50% { transform: translateY(-24px) rotate(14deg) scale(1.08); }
+  100% { transform: translateY(-8px) rotate(-10deg) scale(0.96); }
+}
+
+@keyframes float3D-2 {
+  0% { transform: translateY(0px) rotate(-8deg) scale(0.95); }
+  50% { transform: translateY(-28px) rotate(18deg) scale(1.1); }
+  100% { transform: translateY(-4px) rotate(4deg) scale(1); }
+}
+
+@keyframes float3D-3 {
+  0% { transform: translateY(0px) rotate(12deg) scale(1.05); }
+  50% { transform: translateY(-20px) rotate(-16deg) scale(0.95); }
+  100% { transform: translateY(-12px) rotate(6deg) scale(1.08); }
+}
+
+/* 2. Interactive 3D Recipe Cards with Depth & Specular Glare */
+.recipe-card.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-3d-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.25s ease;
+  border-radius: inherit;
+}
+
+.popout-dish-3d {
+  transform: translateZ(40px);
+  transition: transform 0.25s ease;
+  filter: drop-shadow(0 16px 20px rgba(160, 80, 30, 0.28));
+}
+
+.recipe-card:hover .popout-dish-3d {
+  transform: translateZ(55px) scale(1.12);
+}
+
+.elevated-element-3d {
+  transform: translateZ(25px);
+  transition: transform 0.25s ease;
+}
+
+/* 3. 3D Tactile Buttons with Realistic Press Compression */
+.btn-3d {
+  transform: translateZ(28px);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-3d:hover {
+  transform: translateZ(35px) translateY(-2px);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.14), 0 12px 20px rgba(0, 0, 0, 0.12);
+}
+
+.btn-3d:active {
+  transform: translateZ(20px) translateY(3px) !important;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12) !important;
+}
+
+.btn-primary {
+  box-shadow: 0 6px 0 #9c5c34, 0 14px 26px rgba(197, 123, 76, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #9c5c34, 0 6px 12px rgba(197, 123, 76, 0.3);
+}
+
+/* 4. Enhanced 3D Hero Mascot Orb */
+.hero-chef-circle {
+  transform-style: preserve-3d;
+  box-shadow: 
+    0 35px 70px rgba(180, 100, 35, 0.32),
+    0 12px 24px rgba(0, 0, 0, 0.1),
+    inset 0 4px 18px rgba(255, 255, 255, 0.7);
+}
+
+.hero-chef-img {
+  transform: translateZ(45px);
+}
