@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const CATEGORIES = [
   { id: 'Breakfast', label: 'Breakfast', icon: '☀️', color: '#fef3c7', activeColor: '#fde68a', textColor: '#92400e' },
@@ -24,8 +24,10 @@ const RecipeModal = ({ isOpen, onClose, onSave, recipeToEdit }) => {
   const [cookingTime, setCookingTime] = useState(30);
   const [ingredientsList, setIngredientsList] = useState(DEFAULT_INGREDIENTS);
   const [instructions, setInstructions] = useState('');
+  const [photoPreview, setPhotoPreview] = useState(null);
   const [formError, setFormError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const fileInputRef = useRef(null);
 
   const isEditing = Boolean(recipeToEdit);
 
@@ -50,6 +52,7 @@ const RecipeModal = ({ isOpen, onClose, onSave, recipeToEdit }) => {
       }
 
       setInstructions(recipeToEdit.instructions || '');
+      setPhotoPreview(recipeToEdit.image || null);
       setFormError('');
     } else {
       // New Recipe default
@@ -58,6 +61,7 @@ const RecipeModal = ({ isOpen, onClose, onSave, recipeToEdit }) => {
       setCookingTime(30);
       setIngredientsList(DEFAULT_INGREDIENTS);
       setInstructions('');
+      setPhotoPreview(null);
       setFormError('');
     }
   }, [recipeToEdit, isOpen]);
@@ -366,11 +370,48 @@ const RecipeModal = ({ isOpen, onClose, onSave, recipeToEdit }) => {
                   </div>
                 </div>
                 <div className="photo-card-row">
-                  <button type="button" className="artisan-choose-file-btn">
-                    <span>✨ Choose File</span>
-                  </button>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={fileInputRef}
+                    onChange={(e) => {
+                      const file = e.target.files && e.target.files[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = () => setPhotoPreview(reader.result);
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                    style={{ display: 'none' }}
+                  />
+                  <div className="photo-btn-group">
+                    <button
+                      type="button"
+                      className="artisan-choose-file-btn"
+                      onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                      disabled={isSubmitting}
+                    >
+                      <span>{photoPreview ? '📷 Change Photo' : '✨ Choose File'}</span>
+                    </button>
+                    {photoPreview && (
+                      <button
+                        type="button"
+                        className="photo-remove-btn"
+                        onClick={() => {
+                          setPhotoPreview(null);
+                          if (fileInputRef.current) fileInputRef.current.value = '';
+                        }}
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </div>
                   <div className="photo-preview-thumbnail">
-                    <span>🍲</span>
+                    {photoPreview ? (
+                      <img src={photoPreview} alt="Dish preview" className="photo-preview-img" />
+                    ) : (
+                      <span>🍲</span>
+                    )}
                   </div>
                 </div>
               </div>
