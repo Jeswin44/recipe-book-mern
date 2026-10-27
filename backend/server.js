@@ -5,7 +5,8 @@ const connectDB = require('./config/db');
 const recipeRoutes = require('./routes/recipeRoutes');
 
 // Load environment variables
-dotenv.config();
+const path = require('path');
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 // Initialize express app
 const app = express();
