@@ -16,6 +16,7 @@ import {
 export function App() {
   const [recipes, setRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [fetchError, setFetchError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -37,10 +38,13 @@ export function App() {
   const loadRecipes = useCallback(async () => {
     try {
       setIsLoading(true);
+      setFetchError(null);
       const data = await fetchAllRecipes(selectedCategory, searchQuery);
       setRecipes(data);
     } catch (err) {
-      showToast(err.message || 'Could not connect to backend server', 'error');
+      const msg = err.message || 'Could not connect to backend server';
+      setFetchError(msg);
+      showToast(msg, 'error');
     } finally {
       setIsLoading(false);
     }
@@ -126,11 +130,26 @@ export function App() {
           onSearchChange={setSearchQuery}
         />
 
-        {/* Content States */}
+        {/* Content States: Loading, Error, Empty, and Success */}
         {isLoading ? (
           <div className="state-box">
             <div className="spinner-dot" style={{ width: 28, height: 28, borderColor: '#d9532f', borderTopColor: 'transparent' }}></div>
             <p style={{ marginTop: '1rem', color: '#6b7280', fontWeight: 500 }}>Loading recipes...</p>
+          </div>
+        ) : fetchError ? (
+          <div className="state-box">
+            <div className="state-icon" style={{ color: '#ef4444' }}>
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+            </div>
+            <h3 className="state-title">Unable to Load Recipes</h3>
+            <p className="state-desc">{fetchError}</p>
+            <button className="btn-primary" onClick={loadRecipes}>
+              Retry Connection
+            </button>
           </div>
         ) : recipes.length === 0 ? (
           <div className="state-box">
