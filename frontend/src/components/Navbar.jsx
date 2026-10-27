@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Navbar = ({ onOpenAddModal, totalCount }) => {
+  const [activeNav, setActiveNav] = useState('HOME');
+
+  const handleNavClick = (navItem) => {
+    setActiveNav(navItem);
+    if (navItem === 'HOME') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (navItem === 'MENU' || navItem === 'RECIPES') {
+      const section = document.getElementById('recipes-section');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <header className="site-header">
       <div className="header-container">
-        <div className="brand-logo-area">
+        <div className="brand-logo-area" onClick={() => handleNavClick('HOME')} style={{ cursor: 'pointer' }}>
           <div className="brand-icon">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
@@ -21,9 +35,27 @@ const Navbar = ({ onOpenAddModal, totalCount }) => {
         </div>
 
         <nav className="header-nav-links">
-          <span className="nav-link-item active">HOME</span>
-          <span className="nav-link-item">MENU</span>
-          <span className="nav-link-item">RECIPES</span>
+          <button
+            type="button"
+            className={`nav-link-item ${activeNav === 'HOME' ? 'active' : ''}`}
+            onClick={() => handleNavClick('HOME')}
+          >
+            HOME
+          </button>
+          <button
+            type="button"
+            className={`nav-link-item ${activeNav === 'MENU' ? 'active' : ''}`}
+            onClick={() => handleNavClick('MENU')}
+          >
+            MENU
+          </button>
+          <button
+            type="button"
+            className={`nav-link-item ${activeNav === 'RECIPES' ? 'active' : ''}`}
+            onClick={() => handleNavClick('RECIPES')}
+          >
+            RECIPES
+          </button>
         </nav>
 
         <div className="header-actions">
