@@ -115,14 +115,56 @@ export function App() {
         />
       )}
 
-      {/* Top Navigation */}
+      {/* Top Glass Navigation */}
       <Navbar
         onOpenAddModal={handleOpenAdd}
         totalCount={recipes.length}
       />
 
-      {/* Main Body */}
-      <main className="main-wrapper">
+      {/* Hero Showcase (Styled directly after reference image) */}
+      <header className="hero-showcase">
+        <div className="hero-text-content">
+          <h2 className="hero-main-heading">
+            Delicious Food Is Waiting For You
+          </h2>
+          <p className="hero-description">
+            Your personalized culinary collection. Organize ingredients, refine preparation steps, and master your favorite dishes effortlessly.
+          </p>
+          <div className="hero-cta-group">
+            <button className="hero-btn-terracotta" onClick={handleOpenAdd}>
+              + Add Recipe
+            </button>
+            <button
+              className="hero-btn-outline"
+              onClick={() => {
+                document.getElementById('recipes-section')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Browse Menu
+            </button>
+          </div>
+        </div>
+
+        <div className="hero-dish-wrapper">
+          <div className="hero-dish-plate">
+            <div className="hero-dish-inner">
+              <span className="hero-dish-icon">🥗</span>
+              <span className="hero-dish-tag">Master Chef</span>
+              <span className="hero-dish-sub">Fresh Ingredients &bull; Healthy Living</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Recipes Section */}
+      <main className="main-wrapper" id="recipes-section">
+        {/* Top List Heading (Matching reference image) */}
+        <div className="section-header-centered">
+          <h2 className="section-title-large">Top List</h2>
+          <p className="section-subtitle-pill">Our mainstay culinary collection</p>
+        </div>
+
+        {/* Search and Category Filters */}
         <CategoryFilter
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
@@ -133,12 +175,12 @@ export function App() {
         {/* Content States: Loading, Error, Empty, and Success */}
         {isLoading ? (
           <div className="state-box">
-            <div className="spinner-dot" style={{ width: 28, height: 28, borderColor: '#d9532f', borderTopColor: 'transparent' }}></div>
-            <p style={{ marginTop: '1rem', color: '#6b7280', fontWeight: 500 }}>Loading recipes...</p>
+            <div className="spinner-dot" style={{ width: 32, height: 32, borderColor: '#c57b4c', borderTopColor: 'transparent' }}></div>
+            <p style={{ marginTop: '1rem', color: '#6f5f54', fontWeight: 600 }}>Loading culinary recipes...</p>
           </div>
         ) : fetchError ? (
           <div className="state-box">
-            <div className="state-icon" style={{ color: '#ef4444' }}>
+            <div className="state-icon" style={{ color: '#dc2626' }}>
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="8" x2="12" y2="12" />
@@ -154,7 +196,7 @@ export function App() {
         ) : recipes.length === 0 ? (
           <div className="state-box">
             <div className="state-icon">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
                 <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
               </svg>

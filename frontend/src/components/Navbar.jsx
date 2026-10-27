@@ -6,7 +6,7 @@ const Navbar = ({ onOpenAddModal, totalCount }) => {
       <div className="header-container">
         <div className="brand-logo-area">
           <div className="brand-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M18 8h1a4 4 0 0 1 0 8h-1" />
               <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" />
               <line x1="6" y1="1" x2="6" y2="4" />
@@ -15,15 +15,21 @@ const Navbar = ({ onOpenAddModal, totalCount }) => {
             </svg>
           </div>
           <div>
-            <h1 className="brand-title">SavoryLog</h1>
-            <p className="brand-subtitle">Personal Culinary Repertoire</p>
+            <h1 className="brand-title">FOODEAT</h1>
+            <p className="brand-subtitle">Recipe Book</p>
           </div>
         </div>
+
+        <nav className="header-nav-links">
+          <span className="nav-link-item active">HOME</span>
+          <span className="nav-link-item">MENU</span>
+          <span className="nav-link-item">RECIPES</span>
+        </nav>
 
         <div className="header-actions">
           <div className="stats-pill">
             <span className="stats-number">{totalCount}</span>
-            <span className="stats-label">{totalCount === 1 ? 'Recipe' : 'Recipes'}</span>
+            <span>{totalCount === 1 ? 'Recipe' : 'Recipes'}</span>
           </div>
 
           <button className="btn-primary" onClick={onOpenAddModal}>
