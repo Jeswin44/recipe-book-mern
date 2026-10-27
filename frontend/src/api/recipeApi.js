@@ -1,6 +1,6 @@
 const BASE_URL = import.meta.env.VITE_API_URL || '/api/recipes';
 
-// Default initial recipes fallback for offline / static Vercel preview
+// Default initial recipes fallback for mobile / static Vercel preview
 const DEFAULT_RECIPES = [
   {
     _id: 'sample-1',
@@ -113,11 +113,13 @@ export const fetchAllRecipes = async (category = '', search = '') => {
 
     const url = params.toString() ? `${BASE_URL}?${params.toString()}` : BASE_URL;
     const res = await fetch(url);
-    if (!res.ok) throw new Error('API request failed');
-    const data = await res.json();
-    return data.data;
+    const contentType = res.headers.get('content-type') || '';
+    if (res.ok && contentType.includes('application/json')) {
+      const data = await res.json();
+      return data.data;
+    }
+    throw new Error('FALLBACK_TO_STORAGE');
   } catch {
-    // Seamless fallback to client store when backend is not deployed to the same server
     let list = getLocalRecipes();
     if (category && category !== 'All') {
       list = list.filter(r => r.category === category);
@@ -132,9 +134,12 @@ export const fetchAllRecipes = async (category = '', search = '') => {
 export const fetchRecipeById = async (id) => {
   try {
     const res = await fetch(`${BASE_URL}/${id}`);
-    if (!res.ok) throw new Error('Failed to fetch details');
-    const data = await res.json();
-    return data.data;
+    const contentType = res.headers.get('content-type') || '';
+    if (res.ok && contentType.includes('application/json')) {
+      const data = await res.json();
+      return data.data;
+    }
+    throw new Error('FALLBACK_TO_STORAGE');
   } catch {
     const list = getLocalRecipes();
     const found = list.find(r => r._id === id);
@@ -150,14 +155,17 @@ export const createRecipe = async (recipeData) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(recipeData)
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Failed to create');
-    return data;
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to create');
+      return data;
+    }
+    throw new Error('FALLBACK_TO_STORAGE');
   } catch (err) {
-    if (err.message && err.message !== 'Failed to fetch' && !err.message.includes('fetch')) {
+    if (err.message && !err.message.includes('JSON') && !err.message.includes('Unexpected token') && err.message !== 'FALLBACK_TO_STORAGE') {
       throw err;
     }
-    // Offline / Mobile Vercel fallback
     const list = getLocalRecipes();
     const newRecipe = {
       _id: 'recipe-' + Date.now(),
@@ -177,11 +185,15 @@ export const updateRecipe = async (id, recipeData) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(recipeData)
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Failed to update');
-    return data;
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to update');
+      return data;
+    }
+    throw new Error('FALLBACK_TO_STORAGE');
   } catch (err) {
-    if (err.message && err.message !== 'Failed to fetch' && !err.message.includes('fetch')) {
+    if (err.message && !err.message.includes('JSON') && !err.message.includes('Unexpected token') && err.message !== 'FALLBACK_TO_STORAGE') {
       throw err;
     }
     const list = getLocalRecipes();
@@ -199,11 +211,15 @@ export const deleteRecipe = async (id) => {
     const res = await fetch(`${BASE_URL}/${id}`, {
       method: 'DELETE'
     });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.message || 'Failed to delete');
-    return data;
+    const contentType = res.headers.get('content-type') || '';
+    if (contentType.includes('application/json')) {
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || 'Failed to delete');
+      return data;
+    }
+    throw new Error('FALLBACK_TO_STORAGE');
   } catch (err) {
-    if (err.message && err.message !== 'Failed to fetch' && !err.message.includes('fetch')) {
+    if (err.message && !err.message.includes('JSON') && !err.message.includes('Unexpected token') && err.message !== 'FALLBACK_TO_STORAGE') {
       throw err;
     }
     let list = getLocalRecipes();
