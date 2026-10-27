@@ -730,11 +730,14 @@ button {
 
 .form-modal {
   max-width: 620px;
+  max-height: 88vh;
+  overflow: hidden;
 }
 
 .detail-modal {
   max-width: 680px;
   padding: 2.25rem;
+  max-height: 88vh;
   overflow-y: auto;
 }
 
@@ -750,6 +753,7 @@ button {
   align-items: flex-start;
   justify-content: space-between;
   border-bottom: 1px solid rgba(229, 218, 207, 0.6);
+  flex-shrink: 0;
 }
 
 .detail-modal .modal-header {
@@ -786,13 +790,57 @@ button {
   color: var(--color-text-main);
 }
 
-/* Form Controls */
+/* Form Controls & Smooth Scroll */
 .recipe-form {
-  padding: 1.75rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1.35rem;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.form-fields-scrollable {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
   overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Custom sleek scrollbar */
+.form-fields-scrollable::-webkit-scrollbar,
+.detail-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.form-fields-scrollable::-webkit-scrollbar-track,
+.detail-modal::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 4px;
+}
+
+.form-fields-scrollable::-webkit-scrollbar-thumb,
+.detail-modal::-webkit-scrollbar-thumb {
+  background: rgba(197, 123, 76, 0.35);
+  border-radius: 4px;
+}
+
+.form-fields-scrollable::-webkit-scrollbar-thumb:hover,
+.detail-modal::-webkit-scrollbar-thumb:hover {
+  background: rgba(197, 123, 76, 0.6);
+}
+
+.modal-footer {
+  padding: 1.1rem 2rem;
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid rgba(229, 218, 207, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.85rem;
+  flex-shrink: 0;
 }
 
 .form-alert-error {

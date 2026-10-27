@@ -120,88 +120,90 @@ const RecipeModal = ({ isOpen, onClose, onSave, recipeToEdit }) => {
         )}
 
         <form onSubmit={handleSubmit} className="recipe-form">
-          <div className="form-group">
-            <label className="form-label" htmlFor="recipe-title">
-              Recipe Name <span className="required-star">*</span>
-            </label>
-            <input
-              id="recipe-title"
-              type="text"
-              className="form-input"
-              placeholder="e.g. Creamy Tuscan Garlic Chicken"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              disabled={isSubmitting}
-            />
-          </div>
-
-          <div className="form-row-two-col">
+          <div className="form-fields-scrollable">
             <div className="form-group">
-              <label className="form-label" htmlFor="recipe-category">
-                Category <span className="required-star">*</span>
-              </label>
-              <select
-                id="recipe-category"
-                className="form-select"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                disabled={isSubmitting}
-              >
-                {CATEGORY_OPTIONS.map((cat) => (
-                  <option key={cat} value={cat}>
-                    {cat}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label className="form-label" htmlFor="recipe-time">
-                Cooking Time (in minutes) <span className="required-star">*</span>
+              <label className="form-label" htmlFor="recipe-title">
+                Recipe Name <span className="required-star">*</span>
               </label>
               <input
-                id="recipe-time"
-                type="number"
-                min="1"
-                step="1"
+                id="recipe-title"
+                type="text"
                 className="form-input"
-                placeholder="e.g. 30"
-                value={cookingTime}
-                onChange={(e) => setCookingTime(e.target.value)}
+                placeholder="e.g. Creamy Tuscan Garlic Chicken"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
                 disabled={isSubmitting}
               />
             </div>
-          </div>
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="recipe-ingredients">
-              Ingredients <span className="required-star">*</span>
-              <span className="label-helper-text">(One ingredient per line)</span>
-            </label>
-            <textarea
-              id="recipe-ingredients"
-              rows="4"
-              className="form-textarea"
-              placeholder={"2 chicken breasts\n3 cloves garlic, minced\n1 cup heavy cream\n1/2 cup sun-dried tomatoes"}
-              value={ingredientsText}
-              onChange={(e) => setIngredientsText(e.target.value)}
-              disabled={isSubmitting}
-            />
-          </div>
+            <div className="form-row-two-col">
+              <div className="form-group">
+                <label className="form-label" htmlFor="recipe-category">
+                  Category <span className="required-star">*</span>
+                </label>
+                <select
+                  id="recipe-category"
+                  className="form-select"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  disabled={isSubmitting}
+                >
+                  {CATEGORY_OPTIONS.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          <div className="form-group">
-            <label className="form-label" htmlFor="recipe-instructions">
-              Preparation Steps <span className="required-star">*</span>
-            </label>
-            <textarea
-              id="recipe-instructions"
-              rows="5"
-              className="form-textarea"
-              placeholder="Describe the step-by-step cooking process clearly..."
-              value={instructions}
-              onChange={(e) => setInstructions(e.target.value)}
-              disabled={isSubmitting}
-            />
+              <div className="form-group">
+                <label className="form-label" htmlFor="recipe-time">
+                  Cooking Time (in minutes) <span className="required-star">*</span>
+                </label>
+                <input
+                  id="recipe-time"
+                  type="number"
+                  min="1"
+                  step="1"
+                  className="form-input"
+                  placeholder="e.g. 30"
+                  value={cookingTime}
+                  onChange={(e) => setCookingTime(e.target.value)}
+                  disabled={isSubmitting}
+                />
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="recipe-ingredients">
+                Ingredients <span className="required-star">*</span>
+                <span className="label-helper-text">(One ingredient per line)</span>
+              </label>
+              <textarea
+                id="recipe-ingredients"
+                rows="4"
+                className="form-textarea"
+                placeholder={"2 chicken breasts\n3 cloves garlic, minced\n1 cup heavy cream\n1/2 cup sun-dried tomatoes"}
+                value={ingredientsText}
+                onChange={(e) => setIngredientsText(e.target.value)}
+                disabled={isSubmitting}
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label" htmlFor="recipe-instructions">
+                Preparation Steps <span className="required-star">*</span>
+              </label>
+              <textarea
+                id="recipe-instructions"
+                rows="4"
+                className="form-textarea"
+                placeholder="Describe the step-by-step cooking process clearly..."
+                value={instructions}
+                onChange={(e) => setInstructions(e.target.value)}
+                disabled={isSubmitting}
+              />
+            </div>
           </div>
 
           <div className="modal-footer">
