@@ -146,12 +146,8 @@ export function App() {
         </div>
 
         <div className="hero-dish-wrapper">
-          <div className="hero-dish-plate">
-            <div className="hero-dish-inner">
-              <span className="hero-dish-icon">🥗</span>
-              <span className="hero-dish-tag">Master Chef</span>
-              <span className="hero-dish-sub">Fresh Ingredients &bull; Healthy Living</span>
-            </div>
+          <div className="hero-chef-circle">
+            <img src="/chef.png" alt="Master Chef" className="hero-chef-img" />
           </div>
         </div>
       </header>

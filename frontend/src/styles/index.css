@@ -345,7 +345,7 @@ button {
   background: rgba(255, 255, 255, 0.9);
 }
 
-/* Hero Dish Plate Visual */
+/* Hero Chef Visual */
 .hero-dish-wrapper {
   display: flex;
   justify-content: center;
@@ -353,56 +353,36 @@ button {
   position: relative;
 }
 
-.hero-dish-plate {
-  width: 320px;
-  height: 320px;
+.hero-chef-circle {
+  width: 330px;
+  height: 330px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #a35d36, #7a3a16);
-  padding: 14px;
-  box-shadow: 0 30px 60px rgba(120, 60, 25, 0.35), 0 10px 24px rgba(0,0,0,0.12);
+  background: radial-gradient(circle at 40% 35%, #fef08a 20%, #facc15 65%, #ca8a04 100%);
+  border: 8px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 30px 60px rgba(180, 110, 45, 0.28), 0 8px 20px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: floatDish 6s ease-in-out infinite alternate;
+  overflow: hidden;
+  animation: floatChef 5s ease-in-out infinite alternate;
+  position: relative;
 }
 
-@keyframes floatDish {
+@keyframes floatChef {
   0% { transform: translateY(0px) rotate(0deg); }
-  100% { transform: translateY(-10px) rotate(3deg); }
+  100% { transform: translateY(-12px) rotate(2deg); }
 }
 
-.hero-dish-inner {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: #fbf5eb;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 1.5rem;
-  border: 6px solid #e2cbba;
-  box-shadow: inset 0 6px 14px rgba(0,0,0,0.1);
+.hero-chef-img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  transition: transform 0.35s ease;
+  filter: drop-shadow(0 10px 18px rgba(120, 60, 10, 0.25));
 }
 
-.hero-dish-icon {
-  font-size: 3.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.hero-dish-tag {
-  font-size: 0.85rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-primary);
-}
-
-.hero-dish-sub {
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-  margin-top: 0.2rem;
+.hero-chef-circle:hover .hero-chef-img {
+  transform: scale(1.08);
 }
 
 /* Section Header (Top List style) */
