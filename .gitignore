@@ -1,0 +1,13 @@
+# Ignore dependencies
+**/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Do NOT ignore .env as mandated by assessment instructions:
+# "include the .env file in the repository. It is required so the evaluators can run the project and verify the output."
+!backend/.env
